@@ -1,3 +1,5 @@
 Digit  := '0' | '1' ... '9'
 Number := Digit+
-G = Number
+Plus   := Number '+' Number
+Expr   := Plus | Number
+G = Expr

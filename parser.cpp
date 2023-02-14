@@ -34,10 +34,30 @@ namespace mercury {
         return false;
     }
 
+    bool ParsePlus(std::string_view str, std::size_t& i)
+    {
+        auto curr = i;
+        if (ParseNumber(str, curr)) {
+            if (str[curr] == '+') {
+                curr += 1;
+                if (ParseNumber(str, curr)) {
+                    i = curr;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    bool ParseExpr(std::string_view str, std::size_t& i)
+    {
+        return ParsePlus(str, i) || ParseNumber(str, i);
+    }
+
     bool Parse(std::string_view str)
     {
         std::size_t i = 0;
-        return ParseNumber(str, i) && (i == str.size());
+        return ParseExpr(str, i) && (i == str.size());
     }
 
 }
