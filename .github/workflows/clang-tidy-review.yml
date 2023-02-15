@@ -12,4 +12,4 @@ jobs:
       id: review
       with:
         # CMake command to run in order to generate compile_commands.json
-        cmake_command: cmake . -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+        cmake_command: cmake . -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE

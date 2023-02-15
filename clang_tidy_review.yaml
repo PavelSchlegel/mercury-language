@@ -1,0 +1,112 @@
+---
+MainSourceFile:  '/home/motorhead/mercury-language/parser.cpp'
+Diagnostics:
+  - DiagnosticName:  readability-braces-around-statements
+    DiagnosticMessage:
+      Message:         statement should be inside braces
+      FilePath:        '/home/motorhead/mercury-language/parser.cpp'
+      FileOffset:      679
+      Replacements:
+        - FilePath:        '/home/motorhead/mercury-language/parser.cpp'
+          Offset:          679
+          Length:          0
+          ReplacementText: ' {'
+        - FilePath:        '/home/motorhead/mercury-language/parser.cpp'
+          Offset:          680
+          Length:          0
+          ReplacementText: "\n}"
+    Level:           Warning
+    BuildDirectory:  '/home/motorhead/mercury-language/build'
+  - DiagnosticName:  cppcoreguidelines-avoid-non-const-global-variables
+    DiagnosticMessage:
+      Message:         'variable ''test_info_'' provides global access to a non-const object; consider making the pointed-to data ''const'''
+      FilePath:        '/home/motorhead/mercury-language/test/parser.cpp'
+      FileOffset:      51
+      Replacements:    []
+    Notes:
+      - Message:         'expanded from macro ''TEST'''
+        FilePath:        '/home/motorhead/mercury-language/build/_deps/googletest-src/googletest/include/gtest/gtest.h'
+        FileOffset:      89435
+        Replacements:    []
+      - Message:         'expanded from macro ''GTEST_TEST'''
+        FilePath:        '/home/motorhead/mercury-language/build/_deps/googletest-src/googletest/include/gtest/gtest.h'
+        FileOffset:      89128
+        Replacements:    []
+      - Message:         'expanded from macro ''GTEST_TEST_'''
+        FilePath:        '/home/motorhead/mercury-language/build/_deps/googletest-src/googletest/include/gtest/internal/gtest-internal.h'
+        FileOffset:      60406
+        Replacements:    []
+    Level:           Warning
+    BuildDirectory:  '/home/motorhead/mercury-language/build'
+  - DiagnosticName:  cppcoreguidelines-owning-memory
+    DiagnosticMessage:
+      Message:         'initializing non-owner argument of type ''testing::internal::TestFactoryBase *'' with a newly created ''gsl::owner<>'''
+      FilePath:        '/home/motorhead/mercury-language/test/parser.cpp'
+      FileOffset:      51
+      Replacements:    []
+    Notes:
+      - Message:         'expanded from macro ''TEST'''
+        FilePath:        '/home/motorhead/mercury-language/build/_deps/googletest-src/googletest/include/gtest/gtest.h'
+        FileOffset:      89435
+        Replacements:    []
+      - Message:         'expanded from macro ''GTEST_TEST'''
+        FilePath:        '/home/motorhead/mercury-language/build/_deps/googletest-src/googletest/include/gtest/gtest.h'
+        FileOffset:      89128
+        Replacements:    []
+      - Message:         'expanded from macro ''GTEST_TEST_'''
+        FilePath:        '/home/motorhead/mercury-language/build/_deps/googletest-src/googletest/include/gtest/internal/gtest-internal.h'
+        FileOffset:      61338
+        Replacements:    []
+    Level:           Warning
+    BuildDirectory:  '/home/motorhead/mercury-language/build'
+    Ranges:
+      - FilePath:        ''
+        FileOffset:      0
+        Length:          0
+  - DiagnosticName:  cppcoreguidelines-avoid-non-const-global-variables
+    DiagnosticMessage:
+      Message:         'variable ''test_info_'' provides global access to a non-const object; consider making the pointed-to data ''const'''
+      FilePath:        '/home/motorhead/mercury-language/test/parser.cpp'
+      FileOffset:      309
+      Replacements:    []
+    Notes:
+      - Message:         'expanded from macro ''TEST'''
+        FilePath:        '/home/motorhead/mercury-language/build/_deps/googletest-src/googletest/include/gtest/gtest.h'
+        FileOffset:      89435
+        Replacements:    []
+      - Message:         'expanded from macro ''GTEST_TEST'''
+        FilePath:        '/home/motorhead/mercury-language/build/_deps/googletest-src/googletest/include/gtest/gtest.h'
+        FileOffset:      89128
+        Replacements:    []
+      - Message:         'expanded from macro ''GTEST_TEST_'''
+        FilePath:        '/home/motorhead/mercury-language/build/_deps/googletest-src/googletest/include/gtest/internal/gtest-internal.h'
+        FileOffset:      60406
+        Replacements:    []
+    Level:           Warning
+    BuildDirectory:  '/home/motorhead/mercury-language/build'
+  - DiagnosticName:  cppcoreguidelines-owning-memory
+    DiagnosticMessage:
+      Message:         'initializing non-owner argument of type ''testing::internal::TestFactoryBase *'' with a newly created ''gsl::owner<>'''
+      FilePath:        '/home/motorhead/mercury-language/test/parser.cpp'
+      FileOffset:      309
+      Replacements:    []
+    Notes:
+      - Message:         'expanded from macro ''TEST'''
+        FilePath:        '/home/motorhead/mercury-language/build/_deps/googletest-src/googletest/include/gtest/gtest.h'
+        FileOffset:      89435
+        Replacements:    []
+      - Message:         'expanded from macro ''GTEST_TEST'''
+        FilePath:        '/home/motorhead/mercury-language/build/_deps/googletest-src/googletest/include/gtest/gtest.h'
+        FileOffset:      89128
+        Replacements:    []
+      - Message:         'expanded from macro ''GTEST_TEST_'''
+        FilePath:        '/home/motorhead/mercury-language/build/_deps/googletest-src/googletest/include/gtest/internal/gtest-internal.h'
+        FileOffset:      61338
+        Replacements:    []
+    Level:           Warning
+    BuildDirectory:  '/home/motorhead/mercury-language/build'
+    Ranges:
+      - FilePath:        ''
+        FileOffset:      0
+        Length:          0
+...
