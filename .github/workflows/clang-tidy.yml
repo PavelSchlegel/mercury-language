@@ -1,0 +1,38 @@
+name: Code review with clang-linter
+
+on: pull_request
+
+jobs:
+  cpp-linter:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup clang-tidy
+        run: sudo apt-get install -y clang-tidy
+
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: Configure cmake
+        run: |
+          mkdir build
+          cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE
+
+      - name: Create results directory
+        run: |
+          mkdir clang-tidy-result
+
+      - name: Run clang-tidy
+        run: |
+          cd ${{github.workspace}}
+          git diff -U0 HEAD^ | clang-tidy-diff -p1 -path build -export-fixes clang-tidy-result/fixes.yml
+
+      - name: Run clang-tidy-pr-comments action
+        uses: platisd/clang-tidy-pr-comments@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          clang_tidy_fixes: clang-tidy-result/fixes.yml
+          # Optionally set to true if you want the Action to request
+          # changes in case warnings are found
+          request_changes: true
