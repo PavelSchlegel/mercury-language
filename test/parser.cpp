@@ -17,4 +17,7 @@ TEST(Parser, Expression)
     EXPECT_TRUE(mercury::Parse("0+3"));
     EXPECT_FALSE(mercury::Parse("13+a"));
     EXPECT_FALSE(mercury::Parse("10+7b"));
+    EXPECT_TRUE(mercury::Parse("10-7"));
+    EXPECT_TRUE(mercury::Parse("10*7"));
+    EXPECT_TRUE(mercury::Parse("6/3"));
 }
