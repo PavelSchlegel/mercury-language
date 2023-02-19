@@ -1,5 +1,8 @@
 Digit  := '0' | '1' ... '9'
 Number := Digit+
-Plus   := Number '+' Number
-Expr   := Plus | Number
+Add    := Number '+' Number
+Sub    := Number '-' Number
+Mul    := Number '*' Number
+Div    := Number '/' Number
+Expr   := Add | Sub | Mul | Div | Number
 G = Expr
