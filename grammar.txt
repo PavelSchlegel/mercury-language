@@ -6,13 +6,13 @@ Expr0  := WS (Number | '(' Expr ')' ) WS
 
 Expr1 := Expr0 Ops1
 Ops1  := Mul | Div | Eps
-Mul   := '*' Ops1
-Div   := '/' Ops1
+Mul   := '*' Expr0 Ops1
+Div   := '/' Expr0 Ops1
 
 Expr2 := Expr1 Ops2
 Ops2  := Add | Sub | Eps
-Add   := '+' Ops2
-Sub   := '-' Ops2
+Add   := '+' Expr1 Ops2
+Sub   := '-' Expr1 Ops2
 
 Expr := Expr2
 

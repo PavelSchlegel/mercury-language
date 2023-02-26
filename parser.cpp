@@ -50,73 +50,116 @@ namespace mercury {
         return nullptr;
     }
 
-    INode::Ptr ParseAdd(std::string_view str, std::size_t& i)
+    bool ParseSymbol(char symbol, std::string_view str, std::size_t& i)
+    {
+        if (str.size() == i) {
+            return false;
+        }
+        if (str[i] != symbol) {
+            return false;
+        }
+        i += 1;
+        return true;
+    }
+
+    INode::Ptr ParseExpr0(std::string_view str, std::size_t& i)
+    {
+        INode::Ptr node = nullptr;
+        auto curr = i;
+        ParseWS(str, curr);
+        if (!((node = ParseNumber(str, curr)) || (ParseSymbol('(', str, curr) && (node = ParseExpr(str, curr)) && ParseSymbol(')', str, curr)))) {
+            return nullptr;
+        }
+        ParseWS(str, curr);
+        i = curr;
+        return node;
+    }
+
+    INode::Ptr ParseExpr1(std::string_view str, std::size_t& i)
     {
         auto curr = i;
-        if (auto a = ParseNumber(str, curr)) {
-            if (str.size() == curr) {
-                return nullptr;
-            }
-            if (str[curr++] != '+') {
-                return nullptr;
-            }
-            if (auto b = ParseNumber(str, curr)) {
+        if (auto node = ParseExpr0(str, curr)) {
+            if (auto result = ParseOps1(node, str, curr)) {
                 i = curr;
-                return std::make_shared<Add>(a, b);
+                return result;
             }
         }
         return nullptr;
     }
 
-    INode::Ptr ParseSub(std::string_view str, std::size_t& i)
+    INode::Ptr ParseOps1(INode::Ptr node, std::string_view str, std::size_t& i)
+    {
+        INode::Ptr result = nullptr;
+        if ((result = ParseMul(node, str, i)) || (result = ParseDiv(node, str, i))) {
+            return result;
+        }
+        return node;
+    }
+
+    INode::Ptr ParseMul(INode::Ptr a, std::string_view str, std::size_t& i)
     {
         auto curr = i;
-        if (auto a = ParseNumber(str, curr)) {
-            if (str.size() == curr) {
-                return nullptr;
-            }
-            if (str[curr++] != '-') {
-                return nullptr;
-            }
-            if (auto b = ParseNumber(str, curr)) {
+        if (ParseSymbol('*', str, curr)) {
+            if (auto b = ParseExpr0(str, curr)) {
                 i = curr;
-                return std::make_shared<Sub>(a, b);
+                return ParseOps1(std::make_shared<Mul>(a, b), str, i);
             }
         }
         return nullptr;
     }
 
-    INode::Ptr ParseMul(std::string_view str, std::size_t& i)
+    INode::Ptr ParseDiv(INode::Ptr a, std::string_view str, std::size_t& i)
     {
         auto curr = i;
-        if (auto a = ParseNumber(str, curr)) {
-            if (str.size() == curr) {
-                return nullptr;
-            }
-            if (str[curr++] != '*') {
-                return nullptr;
-            }
-            if (auto b = ParseNumber(str, curr)) {
+        if (ParseSymbol('/', str, curr)) {
+            if (auto b = ParseExpr0(str, curr)) {
                 i = curr;
-                return std::make_shared<Mul>(a, b);
+                return ParseOps2(std::make_shared<Div>(a, b), str, i);
             }
         }
         return nullptr;
     }
 
-    INode::Ptr ParseDiv(std::string_view str, std::size_t& i)
+    INode::Ptr ParseExpr2(std::string_view str, std::size_t& i)
     {
         auto curr = i;
-        if (auto a = ParseNumber(str, curr)) {
-            if (str.size() == curr) {
-                return nullptr;
-            }
-            if (str[curr++] != '/') {
-                return nullptr;
-            }
-            if (auto b = ParseNumber(str, curr)) {
+        if (auto node = ParseExpr1(str, curr)) {
+            if (auto result = ParseOps2(node, str, curr)) {
                 i = curr;
-                return std::make_shared<Div>(a, b);
+                return result;
+            }
+        }
+        return nullptr;
+    }
+
+    INode::Ptr ParseOps2(INode::Ptr node, std::string_view str, std::size_t& i)
+    {
+        INode::Ptr result = nullptr;
+        if ((result = ParseAdd(node, str, i)) || (result = ParseSub(node, str, i))) {
+            return result;
+        }
+        return node;
+    }
+
+    INode::Ptr ParseAdd(INode::Ptr a, std::string_view str, std::size_t& i)
+    {
+        auto curr = i;
+        if (ParseSymbol('+', str, curr)) {
+            if (auto b = ParseExpr1(str, curr)) {
+                i = curr;
+                return ParseOps2(std::make_shared<Add>(a, b), str, i);
+            }
+        }
+        return nullptr;
+    }
+
+    INode::Ptr ParseSub(INode::Ptr a, std::string_view str, std::size_t& i)
+    {
+        auto curr = i;
+        if (ParseSymbol('-', str, curr)) {
+            if (auto b = ParseExpr1(str, curr)) {
+                i = curr;
+                return ParseOps2(std::make_shared<Sub>(a, b), str, i);
             }
         }
         return nullptr;
@@ -124,26 +167,14 @@ namespace mercury {
 
     INode::Ptr ParseExpr(std::string_view str, std::size_t& i)
     {
-        if (auto expr = ParseAdd(str, i)) {
-            return expr;
-        }
-        if (auto expr = ParseSub(str, i)) {
-            return expr;
-        }
-        if (auto expr = ParseMul(str, i)) {
-            return expr;
-        }
-        if (auto expr = ParseDiv(str, i)) {
-            return expr;
-        }
-        return ParseNumber(str, i);
+        return ParseExpr2(str, i);
     }
 
     INode::Ptr Parse(std::string_view str)
     {
         std::size_t i = 0;
         auto result = ParseExpr(str, i);
-        if (result && i == str.size()) {
+        if (result && (i == str.size())) {
             return result;
         }
         return nullptr;

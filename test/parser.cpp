@@ -25,6 +25,7 @@ TEST(Parser, Expression)
 
 TEST(Parser, Complex)
 {
-    //EXPECT_EQ(mercury::Parse("11 + 1 + 2 + 3"), 17);
-    //EXPECT_EQ(mercury::Parse("11 * 2 / 4"), 17);
+    EXPECT_EQ(mercury::Parse("11 + 1 + 2 + 3")->Calc(), 17);
+    EXPECT_EQ(mercury::Parse("10 * 2 / 4")->Calc(), 5);
+    EXPECT_EQ(mercury::Parse("1 + 4 / (3 - 1)")->Calc(), 3);
 }
