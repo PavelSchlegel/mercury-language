@@ -1,8 +1,19 @@
 Digit  := '0' | '1' ... '9'
 Number := Digit+
-Add    := Number '+' Number
-Sub    := Number '-' Number
-Mul    := Number '*' Number
-Div    := Number '/' Number
-Expr   := Add | Sub | Mul | Div | Number
-G = Expr
+WS     := ' '*
+
+Expr0  := WS (Number | '(' Expr ')' ) WS
+
+Expr1 := Expr0 Ops1
+Ops1  := Mul | Div | Eps
+Mul   := '*' Ops1
+Div   := '/' Ops1
+
+Expr2 := Expr1 Ops2
+Ops2  := Add | Sub | Eps
+Add   := '+' Ops2
+Sub   := '-' Ops2
+
+Expr := Expr2
+
+G := Expr
